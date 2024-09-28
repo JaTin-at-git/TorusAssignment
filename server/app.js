@@ -36,7 +36,10 @@ app.get("/test", async (req, res, next) => {
 //defining routers
 // todo: routes here
 const userRoutes = require("./routes/userRouters");
-app.use("/user",userRoutes)
+app.use("/user", userRoutes);
+
+const taskRoutes = require("./routes/taskRouters");
+app.use("/tasks", taskRoutes);
 
 //for undefined routs
 const AppError = require("./util/appError");

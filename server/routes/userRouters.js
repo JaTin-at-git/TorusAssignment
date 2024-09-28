@@ -20,6 +20,8 @@ router.post('/login', rateLimit({
 
 router.post('/logout', authController.logout); //ok
 
+router.post('/createTask', authController.protect, userController.createTask);
+
 router.post('/test', (req, res, next) => {
     res.status(200).json({
         status: "success"

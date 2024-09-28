@@ -4,7 +4,7 @@ const validator = require("validator"); //provides various schema validators
 const bcryptjs = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-  email: {
+    email: {
         type: String,
         unique: true,
         lowercase: true,
@@ -24,7 +24,18 @@ const userSchema = new mongoose.Schema({
                 return el === this.password;
             }, message: "Passwords are not the same!",
         },
-    }
+    }, personalTasks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
+    }],
+    assignedTasks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
+    }],
+    assignedToOtherTasks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
+    }]
 });
 
 //before saving, encrypt the password and remove confirm password
