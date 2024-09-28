@@ -1,193 +1,76 @@
-import React, { Fragment } from "react";
-import { Link, NavLink, useNavigate, useNavigation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { logoutUser } from "../redux/apiCalls/userCalls.js";
-import { FaGraduationCap } from "react-icons/fa";
-import { PiStudentLight } from "react-icons/pi";
-import FontChange from "./FontChange.jsx";
+import React, {Fragment} from "react";
+import {NavLink, useNavigate, useNavigation} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {logoutUser} from "../redux/apiCalls/userCalls.js";
 
 const UserNavbar = () => {
     const user = useSelector((state) => state.persistedReducer.user.user);
-    // const user = false; // just temporarily for seeing how the user screen looks;
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // just to debug
-    const count = useSelector((state) => state.counter.value);
-
-    function classNames(...classes) {
-        return classes.filter(Boolean).join(" ");
-    }
 
     async function handleLogout() {
         await logoutUser(dispatch);
     }
 
-    const underlineIfActive = ({ isActive }) =>
-        `${
-            isActive
-                ? "text-yellow-200 box-border transition-all border-yellow-300 border-b-2"
-                : ""
-        }`;
+    const underlineIfActive = ({isActive}) => `${isActive ? "text-black box-border transition-all border-blue-600 border-b-2" : "text-gray-500"}`;
 
-    const links = (
-        <>
-            <NavLink to="" className={underlineIfActive}>
-                Home
-            </NavLink>
-            {!user && (
-                <NavLink to="/signup" className={underlineIfActive}>
-                    Signup
-                </NavLink>
-            )}
-            {!user && (
-                <NavLink to="/login" className={underlineIfActive}>
-                    Login
-                </NavLink>
-            )}
-            <NavLink to="/explore" className={underlineIfActive}>
-                Explore
-            </NavLink>
-        </>
-    );
+    const links = (<>
+        {!user && (<NavLink to="/signup" className={underlineIfActive}>
+            Signup
+        </NavLink>)}
+        {!user && (<NavLink to="/login" className={underlineIfActive}>
+            Login
+        </NavLink>)}
+    </>);
 
     return (
-        <div className="sticky top-0 z-10 font-montserrat w-full">
-            <Disclosure
-                as="nav"
-                className="bg-blue-main p-0 text-white border-none outline-none z-20 shadow-sm relative"
-            >
-                {({ open }) => (
-                    <div className="relative">
-                        <div className="mx-auto max-w-7xl px-2 w-full">
-                            <div className="navbar min-h-6 pt-0">
-                                <div className="navbar-start">
-                                    <div className="navbar-start lg:hidden">
-                                        <div className="dropdown">
-                                            <div
-                                                tabIndex={0}
-                                                role="button"
-                                                className="btn btn-ghost btn-circle"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-5 w-5"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M4 6h16M4 12h16M4 18h7"
-                                                    />
-                                                </svg>
-                                            </div>
-                                            <div
-                                                tabIndex={0}
-                                                className="menu menu-sm p-1 border-1 shadow-sm border-white bg-slate-900 rounded-md m-1 dropdown-content mt-3 z-[1] p-2 shadow rounded-md w-52"
-                                            >
-                                                {links}
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div className="flex flex-row-reverse lg:flex-row flex-1">
-                                        <NavLink
-                                            to="/"
-                                            className="flex relative items-center translate-x-full lg:translate-x-0"
-                                        >
-                                            <FaGraduationCap size={30} className="mr-2 opacity-100" />
-                                        </NavLink>
-                                    </div>
-                                </div>
-                                <div className="navbar-center hidden lg:flex">
-                                    <div className="flex flex-row-reverse flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                                        <div className="hidden sm:ml-6 sm:block">
-                                            <div className="flex space-x-4">{links}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="navbar-end">
-                                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                        {user && (
-                                            <Menu as="div" className="relative ml-3">
-                                                <Menu.Button className="relative flex p-1 rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                                    <span className="absolute -inset-1.5" />
-                                                    <span className="sr-only">Open user menu</span>
-                                                    <PiStudentLight size={24} className="text-black" />
-                                                </Menu.Button>
-                                                <Transition
-                                                    as={Fragment}
-                                                    enter="transition ease-out duration-100"
-                                                    enterFrom="transform opacity-0 scale-95"
-                                                    enterTo="transform opacity-100 scale-100"
-                                                    leave="transition ease-in duration-75"
-                                                    leaveFrom="transform opacity-100 scale-100"
-                                                    leaveTo="transform opacity-0 scale-95"
-                                                >
-                                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                        <Menu.Item>
-                                                            {({ active }) => (
-                                                                <Link
-                                                                    to="/profilepage/"
-                                                                    className={classNames(
-                                                                        active ? "bg-gray-100" : "",
-                                                                        "block px-4 py-2 text-sm text-gray-700"
-                                                                    )}
-                                                                >
-                                                                    Profile
-                                                                </Link>
-                                                            )}
-                                                        </Menu.Item>
 
-                                                        <Menu.Item>
-                                                            {({ active }) => (
-                                                                <div
-                                                                    onClick={handleLogout}
-                                                                    className={classNames(
-                                                                        active ? "bg-gray-100" : "",
-                                                                        "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
-                                                                    )}
-                                                                >
-                                                                    Logout
-                                                                </div>
-                                                            )}
-                                                        </Menu.Item>
-                                                    </Menu.Items>
-                                                </Transition>
-                                            </Menu>
-                                        )}
-                                    </div>
-                                </div>
+        <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-md">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pb-1">
+                <div className="flex flex-col rtl:space-x-reverse">
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Torus Assignment</span>
+                    <a className="text-gray-300" href="mailto:jigyashusaini7@gmail.com">Created by Jigyasu Saini</a>
+                </div>
+                {!user && <>
+                    <button data-collapse-toggle="navbar-default" type="button"
+                            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            aria-controls="navbar-default" aria-expanded="false">
+                        <span className="sr-only">Open main menu</span>
+                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 17 14">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M1 1h15M1 7h15M1 13h15"/>
+                        </svg>
+                    </button>
+                    <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+                        <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                            <div className="dropdown dropdown-end flex gap-2 text-sm font-medium mr-2">
+                                {links}
+                            </div>
+                        </ul>
+                    </div>
+                </>}
+                {
+                    user && <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full">
+                                <img
+                                    alt="Tailwind CSS Navbar component"
+                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"/>
                             </div>
                         </div>
-
-                        <Disclosure.Panel className="sm:hidden">
-                            <div className="space-y-1 px-2 pb-3 pt-2">
-                                <NavLink to="/">Home</NavLink>
-                                {!user && <NavLink to="/signup">Signup</NavLink>}
-                                {!user && <NavLink to="/login">Login</NavLink>}
-                            </div>
-                        </Disclosure.Panel>
+                        <ul
+                            tabIndex={0}
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                            <li><a onClick={handleLogout}>Logout</a></li>
+                        </ul>
                     </div>
-                )}
-            </Disclosure>
-            <div className="h-1 w-full relative">
-                {navigation.state === "loading" ? (
-                    <progress
-                        className="progress progress-primary absolute h-[5px] border-b-2 border-black bg-stone-700"
-                        style={{ "--progress-color": "#FACA15" }}
-                    ></progress>
-                ) : (
-                    ""
-                )}
+                }
             </div>
+        </nav>
 
-        </div>
     );
 };
 

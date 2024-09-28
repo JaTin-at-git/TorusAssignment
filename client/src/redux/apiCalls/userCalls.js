@@ -15,7 +15,7 @@ export const loginUser = async (dispatch, body) => {
   const id = toast.loading("Logging you in");
   try {
     // api call
-    const [err, res] = await to(request.post("/student/login", body));
+    const [err, res] = await to(request.post("/user/login", body));
     if (err) {
       toast.update(id, {
         render: `${err.response.data.message || err.response.data || "Some error occurred please try again later"}`,
@@ -52,7 +52,7 @@ export const signup = async (dispatch, formData) => {
   dispatch(startFetch());
   const id = toast.loading("Signing you in");
 
-  const [err, response] = await to(request.post("/student/register", formData));
+  const [err, response] = await to(request.post("/user/signup", formData));
   if (err || ((response.status / 100) | 0) !== 2) {
     const errorMessage =
       err.response?.data?.message ||
@@ -84,7 +84,7 @@ export const logoutUser = async (dispatch) => {
   dispatch(startFetch());
   const id = toast.loading("Logging out!");
   try {
-    const response = await request.post("/student/logout");
+    const response = await request.post("/user/logout");
     if (((response.status / 100) | 0) !== 2) throw new Error();
     dispatch(logoutSuccess());
     toast.update(id, {

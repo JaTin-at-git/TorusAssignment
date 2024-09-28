@@ -20,10 +20,8 @@ function LoginPage() {
 
 
     const [formData, setFormData] = useState({
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "john.doe@example.com",
-        "password": "password123"
+        "email": "jigyashusaini7@gmail.com",
+        "password": "password"
     });
 
     const handleChange = (e) => {
@@ -36,6 +34,7 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("handeling submit")
         await loginUser(dispatch, formData);
     };
 
@@ -46,26 +45,6 @@ function LoginPage() {
                     className="w-full lg:w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 className="text-xl font-medium text-gray-900 dark:text-white mb-6">Student Login</h5>
                     <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleSubmit}>
-
-                        <div>
-                            <label htmlFor="firstName"
-                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
-                                Name</label>
-                            <input type="text" name="firstName" id="firstName" value={formData.firstName}
-                                   onChange={handleChange}
-                                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="John" required/>
-                        </div>
-
-                        <div>
-                            <label htmlFor="lastName"
-                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
-                                Name</label>
-                            <input type="text" name="lastName" id="lastName" value={formData.lastName}
-                                   onChange={handleChange}
-                                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="Doe" required/>
-                        </div>
 
 
                         <div>
