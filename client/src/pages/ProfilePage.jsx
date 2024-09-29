@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {setLoginRedirect} from "../redux/auxiliarySlice.js";
+import CreateTaskModal from "../components/CreateTaskModal.jsx";
 
 
 const ProfilePage = () => {
@@ -17,28 +18,17 @@ const ProfilePage = () => {
 
 
     return (
-        <div className="flex justify-center items-center align-middle">
+        <div className="relative flex justify-center items-center align-middle">
             <div className="max-w-[1400px] w-full p-5 rounded-lg bg-green-200">
                 <div>
 
-                    <button className="btn" onClick={()=>document.getElementById("createTaskModal").showModal()}>open modal</button>
+                    <button className="btn" onClick={()=>document.getElementById("createTaskModal").showModal()}>Create Task</button>
 
                 </div>
             </div>
 
-            <dialog id="createTaskModal" className="modal">
-                <div className="modal-box">
-                    <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                    </form>
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">Press ESC key or click on ✕ button to close</p>
-                </div>
-                <form method="dialog" className="modal-backdrop">
-                    <button>close</button>
-                </form>
-            </dialog>
+                <CreateTaskModal id="createTaskModal"/>
+
         </div>
     );
 };

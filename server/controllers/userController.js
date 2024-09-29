@@ -9,6 +9,8 @@ exports.createTask = catchAsync(async (req, res, next) => {
     const user = {...req.user._doc};
     const {title, description, dueDate, assignedUserEmail, priority, type} = req.body;
 
+    console.log(req.body);
+
     let task = undefined;
 
     const session = await mongoose.startSession();
@@ -26,32 +28,20 @@ exports.createTask = catchAsync(async (req, res, next) => {
             }
 
             task = await Task.create([{
-                title,
-                description,
-                dueDate: new Date(dueDate),
-                assignedUser: assignedUser._id, // Referencing the assigned user
+                title, description, dueDate: new Date(dueDate), assignedUser: assignedUser._id, // Referencing the assigned user
                 createdBy: user._id, // Referencing the admin who created the task
                 priority
             }], {session});
 
-            await Promise.all([
-                User.findByIdAndUpdate(user._id, {$push: {assignedToOtherTasks: task[0]._id}}, {session}),
-                User.findByIdAndUpdate(assignedUser._id, {$push: {assignedTasks: task[0]._id}}, {session})
-            ]);
+            await Promise.all([User.findByIdAndUpdate(user._id, {$push: {assignedToOtherTasks: task[0]._id}}, {session}), User.findByIdAndUpdate(assignedUser._id, {$push: {assignedTasks: task[0]._id}}, {session})]);
         }
 
-        // If the user is non-admin, only personal tasks can be created
-        if (!user.isAdmin && type === 'personal') {
+        if (type === 'personal') {
             task = await Task.create([{
-                title,
-                description,
-                dueDate: new Date(dueDate),
-                assignedUser: user._id, // Assigning the task to themselves
-                createdBy: user._id,
-                priority
+                title, description, dueDate: new Date(dueDate), assignedUser: user._id, // Assigning the task to themselves
+                createdBy: user._id, priority
             }], {session});
 
-            // Add the task to the personalTasks array
             await User.findByIdAndUpdate(user._id, {$push: {personalTasks: task[0]._id}}, {session});
         }
 
@@ -59,13 +49,12 @@ exports.createTask = catchAsync(async (req, res, next) => {
         await session.commitTransaction();
         await session.endSession();
 
-        if(!task) return next(new AppError("Task was not created. Please check all inputs!", 200));
+        console.log(task);
+        if (!!task) return next(new AppError("Task was not created. Please check all inputs!", 200));
 
         // Send a success response back to the client
         res.status(201).json({
-            status: 'success',
-            message: 'Task successfully created!',
-            data: {task: task}
+            status: 'success', message: 'Task successfully created!', data: {task: task}
         });
 
     } catch (err) {
@@ -75,9 +64,12 @@ exports.createTask = catchAsync(async (req, res, next) => {
     }
 });
 
-
-
-
+exports.isAdmin = catchAsync(async (req, res, next) => {
+    const user = {...req.user._doc};
+    return res.status(200).json({
+        status: 'success', isAdmin: !!user.isAdmin
+    });
+})
 
 
 

@@ -20,6 +20,8 @@ router.post('/login', rateLimit({
 
 router.post('/logout', authController.logout); //ok
 
+router.get('/isAdmin', authController.protect, userController.isAdmin);
+
 router.post('/createTask', authController.protect, userController.createTask);
 
 router.post('/test', (req, res, next) => {
@@ -27,6 +29,7 @@ router.post('/test', (req, res, next) => {
         status: "success"
     })
 });
+
 
 
 module.exports = router;

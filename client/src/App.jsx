@@ -30,15 +30,17 @@ function App() {
 
     return (
         <div>
-            <div>
+            <div className="relative">
                 <ToastContainer
                     position="top-right"
-                    autoClose="1000"
-                    closeOnClick="true"
+                    autoClose={1000}
+                    closeOnClick={true}
                     transition={Zoom}
-                    draggable="true"
+                    draggable={true}
+                    style={{ zIndex: 9999}}
                 />
                 <RouterProvider router={router}/>
+
             </div>
         </div>
     );
