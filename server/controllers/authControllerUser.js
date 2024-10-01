@@ -21,11 +21,11 @@ const createSendToken = (user, status, res) => {
     const options = process.env.NODE_ENV === "development" ? {
         expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), httpOnly: true, secure: false,
     } : {
-        domain: ".onrender.com",  // Share the cookie across subdomains
-        path: "/",                // Make cookie available on all paths
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),  // Set expiration (e.g., 1 day)
-        httpOnly: true,           // Prevent JavaScript access to the cookie (secure)
-        secure: true,             // Send only over HTTPS
+        domain: process.env.DOMAIN,
+        path: "/",
+        expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        secure: true,
         sameSite: "None",
     };
     res.cookie("jwt", token, options);
@@ -85,8 +85,14 @@ exports.logout = catchAsync(async (req, res, next) => {
     const options = process.env.NODE_ENV === "development" ? {
         expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), httpOnly: true, secure: false,
     } : {
-        expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), secure: true, domain: process.env.DOMAIN
+        domain: process.env.DOMAIN,
+        path: "/",
+        expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
     };
+
     res.cookie("jwt", "", options).json({
         status: "success", message: "cookie deleted"
     })
