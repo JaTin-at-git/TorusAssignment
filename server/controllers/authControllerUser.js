@@ -24,7 +24,9 @@ const createSendToken = (user, status, res) => {
         expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
         httpOnly: true,
         secure: true,
-        domain: process.env.DOMAIN
+        domain: process.env.DOMAIN,
+        sameSite: "None",
+        path: "/"
     };
     res.cookie("jwt", token, options);
 
