@@ -6,7 +6,6 @@ import {signup} from "../redux/apiCalls/userCalls.js";
 function SignupPage() {
 
     let user = useSelector((state) => state.persistedReducer.user.user);
-    const loginRedirect = useSelector((state) => state.persistedReducer.auxiliary.loginRedirect);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

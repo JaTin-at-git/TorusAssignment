@@ -129,6 +129,32 @@ export const createTask = async (formData) => {
     }
 };
 
+export const deleteTask = async (taskId) => {
+    const id = toast.loading("Deleting task!");
+    try {
+        const response = await request.post("/user/deleteTask", {taskId});
+        if (((response.status / 100) | 0) !== 2) throw new Error();
+        toast.update(id, {
+            render: "Task Deleted!",
+            type: "success",
+            isLoading: false,
+            autoClose: 2000,
+        });
+        return response;
+    } catch (e) {
+        const errorMessage =
+            e.response?.data?.message ||
+            "Some error occurred! please try again later.";
+        toast.update(id, {
+            render: errorMessage,
+            type: "error",
+            isLoading: false,
+            autoClose: 0,
+        });
+        throw new Error(errorMessage);
+    }
+};
+
 export const updateTaskStatus = async (taskId, newStatus) => {
     try {
         const response = await request.post("/tasks/updateTaskStatus", {taskId, newStatus});

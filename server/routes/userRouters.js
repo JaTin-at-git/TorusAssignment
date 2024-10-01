@@ -23,6 +23,7 @@ router.post('/logout', authController.logout); //ok
 router.get('/isAdmin', authController.protect, userController.isAdmin);
 
 router.post('/createTask', authController.protect, userController.createTask);
+router.post('/deleteTask', authController.protect, userController.deleteTask);
 
 router.post('/test', (req, res, next) => {
     res.status(200).json({

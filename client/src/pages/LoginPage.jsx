@@ -6,7 +6,6 @@ import {loginUser} from "../redux/apiCalls/userCalls.js";
 function LoginPage() {
 
     let user = useSelector((state) => state.persistedReducer.user.user);
-    const loginRedirect = useSelector((state) => state.persistedReducer.auxiliary.loginRedirect);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

@@ -71,6 +71,63 @@ exports.isAdmin = catchAsync(async (req, res, next) => {
     });
 })
 
+exports.deleteTask = catchAsync(async (req, res, next) => {
+    const user = { ...req.user._doc };
+    const { taskId } = req.body;
+
+    // Start a session for the transaction
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        // Find the task by ID
+        const task = await Task.findById(taskId).session(session);
+        if (!task) {
+            return next(new AppError("Task not found.", 404));
+        }
+
+        // Ensure the user has permission to delete the task
+        if (
+            (task.assignedUser.toString() !== user._id.toString() &&
+                task.createdBy.toString() !== user._id.toString()) ||
+            (!user.isAdmin && task.assignedUser.toString() !== user._id.toString())
+        ) {
+            return next(new AppError("You do not have permission to delete this task.", 403));
+        }
+
+        // Remove the task from any user's assignedTasks or personalTasks array
+        if (task.assignedUser.toString() === user._id.toString()) {
+            await User.findByIdAndUpdate(user._id, { $pull: { assignedTasks: task._id } }, { session });
+        } else {
+            await User.findByIdAndUpdate(user._id, { $pull: { personalTasks: task._id } }, { session });
+        }
+
+        if (user.isAdmin) {
+            await User.updateMany(
+                { $or: [{ assignedTasks: task._id }, { assignedToOtherTasks: task._id }] },
+                { $pull: { assignedTasks: task._id, assignedToOtherTasks: task._id } },
+                { session }
+            );
+        }
+
+        // Delete the task
+        await Task.findByIdAndDelete(task._id, { session });
+
+        // Commit the transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        // Send response back to the client
+        res.status(200).json({
+            status: 'success',
+            message: 'Task successfully deleted!',
+        });
+    } catch (err) {
+        await session.abortTransaction();
+        session.endSession();
+        return next(err);
+    }
+});
 
 
 
