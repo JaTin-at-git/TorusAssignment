@@ -1,6 +1,6 @@
 import TaskStatusBar from "./TaskStatusBar.jsx";
 
-function TaskTile({task}) {
+function TaskTile({task, taskType}) {
     return <div className="overflow-hidden bg-white max-w-[90%] w-full relative p-4 rounded-lg shadow-sm hover:shadow-lg transition-all">
         <p className="badge text-white px-4 bg-red-700 top-4 right-4 absolute py-3">{new Date(task.dueDate).toLocaleDateString()}</p>
         <p className={`opacity-80 shadow-md p-2 w-12 h-12 absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-${task.priority === "low" ? "green-600" : task.priority === "medium" ? "yellow-300" : "red-700"}`}></p>
@@ -14,7 +14,7 @@ function TaskTile({task}) {
                 <p className="badge badge-outline badge-ghost p-3">Created
                     on: {new Date(task.createdAt).toLocaleDateString()}</p>
             </div>
-            <TaskStatusBar status={task.status}/>
+            <TaskStatusBar taskType={taskType} taskId={task._id} status={task.status}/>
         </div>
     </div>;
 }

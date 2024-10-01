@@ -87,3 +87,46 @@ exports.getTasks = catchAsync(async (req, res, next) => {
     });
 });
 
+
+exports.updateTaskStatus = catchAsync(async (req, res, next) => {
+    const { taskId, newStatus } = req.body; // Extract task ID and new status from request body
+    console.log(req.body)
+    const user = { ...req.user._doc }; // Extract the user object from the request
+
+    if (!taskId || !newStatus) {
+        return next(new AppError('Task ID and new status are required!', 400));
+    }
+
+    // Find the task by the taskId
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+        return next(new AppError('Task not found!', 404));
+    }
+
+    // Check if the user is the owner of the task or the assigned user
+    if (!user.personalTasks.includes(taskId) && !user.assignedTasks.includes(taskId)) {
+        return next(new AppError('You are not authorized to change the status of this task!', 403));
+    }
+
+    // Status can only be changed by the assigned user
+    if (task.assignedUser.toString() !== user._id.toString()) {
+        return next(new AppError('Only the assigned user can change the status of the task!', 403));
+    }
+
+    // Update the status of the task
+    task.status = newStatus;
+
+    // Save the updated task
+    await task.save();
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Task status updated successfully!',
+        data: {
+            task
+        }
+    });
+});
+
+

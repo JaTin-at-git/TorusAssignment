@@ -128,3 +128,16 @@ export const createTask = async (formData) => {
         throw new Error(errorMessage);
     }
 };
+
+export const updateTaskStatus = async (taskId, newStatus) => {
+    try {
+        const response = await request.post("/tasks/updateTaskStatus", {taskId, newStatus});
+        if (((response.status / 100) | 0) !== 2) throw new Error();
+        return response;
+    } catch (e) {
+        const errorMessage =
+            e.response?.data?.message ||
+            "Some error occurred! please try again later.";
+        throw new Error(errorMessage);
+    }
+};

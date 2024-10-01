@@ -97,10 +97,6 @@ const ProfilePage = () => {
         <div className="relative flex justify-center items-center align-middle">
             <div className="max-w-[1400px] w-full p-5 rounded-lg bg-gray-50 shadow-sm">
 
-                <button className="btn" onClick={() => document.getElementById("createTaskModal").showModal()}>
-                    Create Task
-                </button>
-
                 <div className="flex gap-4 flex-wrap my-2">
                     <button className={`p-2 px-4 border-0 rounded-sm ${taskType === 'personal' ? 'border-b-2 border-b-black' : ''}`}
                             onClick={() => handleTaskTypeChange('personal')}>
@@ -139,7 +135,7 @@ const ProfilePage = () => {
 
                 <div>
                     <div className="flex flex-col w-full justify-center items-center gap-6">
-                        {taskData && taskData.map(t => <TaskTile key={t._id} task={t} />)}
+                        {taskData && taskData.map(t => <TaskTile key={t._id} taskType={taskType} task={t} />)}
                     </div>
                 </div>
 

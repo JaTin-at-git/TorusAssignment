@@ -52,13 +52,14 @@ const UserNavbar = () => {
                         </ul>
                     </div>
                 </>}
-                {
-                    user && <div className="dropdown dropdown-end">
+                {user && <div className="flex justify-center items-center align-middle gap-2">
+                    <button className="btn" onClick={() => document.getElementById("createTaskModal").showModal()}>
+                        Create Task
+                    </button>
+                    <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"/>
+                            <div className="w-10 rounded-full flex justify-center items-center align-middle">
+                                <div className="bg-blue-500 w-full h-full text-2xl text-white">{user.name.split(' ').map(n => n[0].toUpperCase()).join('')}</div>
                             </div>
                         </div>
                         <ul
@@ -67,7 +68,7 @@ const UserNavbar = () => {
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>
-                }
+                </div>}
             </div>
         </nav>
 

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
+import {updateTaskStatus} from "../redux/apiCalls/userCalls.js";
+import {toast} from "react-toastify";
+import to from "await-to-js";
 
-const TaskStatusBar = ({ status }) => {
+const TaskStatusBar = ({status, taskId, taskType}) => {
+    const changeAble = taskType!=="assignedToOthers";
     const [step, setStep] = useState(0);
     const [initialStep, setInitialStep] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSliderChange = (e) => {
         setStep(parseInt(e.target.value));
@@ -21,14 +26,21 @@ const TaskStatusBar = ({ status }) => {
         }
     }, [status]);
 
-    function handleStatusChange() {
-        // leave this function as is
+    async function handleStatusChange() {
+        setErrorMessage("");
+        const [err, res] = await to(updateTaskStatus(taskId, step === 0 ? "ToDo" : step === 1 ? "In Progress" : "Completed"));
+        if (err) setErrorMessage(err.message);
+        else {
+            setInitialStep(step);
+            toast("Status Changed", {type: "success"})
+        }
     }
 
     return (
         <div className="flex gap-6 my-8">
             <div className="max-w-[450px]">
                 <input
+                    disabled={!changeAble}
                     id="status"
                     type="range"
                     min="0"
@@ -46,10 +58,13 @@ const TaskStatusBar = ({ status }) => {
             </div>
 
             {/* Conditionally render the button only if the status has changed */}
-            {step !== initialStep && (
-                <button onClick={handleStatusChange} className="btn btn-outline">
-                    Change Status
-                </button>
+            {changeAble && step !== initialStep && (
+                <div className="flex flex-col items-start">
+                    <p className="text-red-700 p-3 font-medium">{errorMessage}</p>
+                    <button onClick={handleStatusChange} className="btn btn-outline">
+                        Change Status
+                    </button>
+                </div>
             )}
         </div>
     );
