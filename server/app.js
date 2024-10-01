@@ -7,7 +7,7 @@ const cors = require("cors"); //prevents cors blockage
 app.use(
     cors({
         credentials: true,
-        origin: process.env.NODE_ENV === "development" ? process.env.LOCALHOST : process.env.DOMAIN,
+        origin: process.env.NODE_ENV === "development" ? process.env.LOCALHOST : process.env.DEPLOYED,
     })
 );
 
