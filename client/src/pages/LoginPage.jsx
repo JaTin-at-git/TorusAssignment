@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";
-import {setLoginRedirect} from "../redux/auxiliarySlice.js";
-import {loginUser, signup} from "../redux/apiCalls/userCalls.js";
+import {loginUser} from "../redux/apiCalls/userCalls.js";
 
 function LoginPage() {
 
@@ -13,8 +12,7 @@ function LoginPage() {
 
     useEffect(() => {
         if (user) {
-            navigate(loginRedirect ? loginRedirect : "/", {replace: true});
-            dispatch(setLoginRedirect(null));
+            navigate( "/", {replace: true});
         }
     }, [user]);
 

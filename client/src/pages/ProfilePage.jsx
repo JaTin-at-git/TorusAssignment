@@ -13,7 +13,7 @@ export async function getTasks({ request: req }) {
     // Extract query parameters with default values
     const taskType = params.get('taskType') || 'personal';
     const page = params.get('page') || 1;
-    const limit = params.get('limit') || 2;
+    const limit = params.get('limit') || 10;
     const status = params.get('status') || '';
     const priority = params.get('priority') || '';
     const assignedUserEmail = params.get('assignedUserEmail') || '';

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";
-import {setLoginRedirect} from "../redux/auxiliarySlice.js";
 import {signup} from "../redux/apiCalls/userCalls.js";
 
 function SignupPage() {
@@ -11,12 +10,13 @@ function SignupPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+
     useEffect(() => {
         if (user) {
-            navigate(loginRedirect ? loginRedirect : "/", {replace: true});
-            dispatch(setLoginRedirect(null));
+            navigate( "/", {replace: true});
         }
     }, [user]);
+
 
     // Updated formData with only required fields
     const [formData, setFormData] = useState({
