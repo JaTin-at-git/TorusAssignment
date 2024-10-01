@@ -41,7 +41,11 @@ exports.getTasks = catchAsync(async (req, res, next) => {
     if (assignedUserEmail) {
         const assignedUser = await User.findOne({email: assignedUserEmail});
         if (!assignedUser) {
-            return next(new AppError(`User with email ${assignedUserEmail} not found.`, 404));
+            return res.status(200).json({
+                status: 'success', results: 0, data: {
+                    tasks: {}
+                }
+            });
         }
         query.assignedUser = assignedUser._id;
     }
@@ -56,14 +60,10 @@ exports.getTasks = catchAsync(async (req, res, next) => {
         .populate('assignedUser', 'name email') // Populate user info in the result
         .populate('createdBy', 'name email');
 
-    if (!tasks || tasks.length === 0) {
-        return next(new AppError('No tasks found with the specified filters!', 404));
-    }
-
     // Send response with paginated tasks and filters
     res.status(200).json({
         status: 'success', results: tasks.length, data: {
-            tasks
+            tasks : tasks || {}
         }
     });
 

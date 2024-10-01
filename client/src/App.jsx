@@ -2,7 +2,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {ToastContainer, Zoom} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Root from "./pages/Root.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
+import ProfilePage, {getTasks} from "./pages/ProfilePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -17,6 +17,7 @@ function App() {
                 {
                     path: "",
                     element: <ProfilePage/>,
+                    loader: getTasks
                 }, {
                     path: "signup",
                     element: <SignupPage/>

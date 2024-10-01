@@ -15,7 +15,7 @@ const Root = () => {
         <>
             <UserNavbar/>
             <div
-                className="grow w-screen h-screen bg-base-100 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+                className="grow w-screen min-h-screen bg-base-100 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
                 <div className="">
                     <Outlet/>
                 </div>

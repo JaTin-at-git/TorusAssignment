@@ -2,8 +2,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import ownerReducer from "./ownerSlice";
 import auxiliaryReducer from "./auxiliarySlice";
-import counterReducer from "./counterSlice";
-import fontReducer from "./fontSlice";
 import themeReducer from "./ThemeSlices/themeSlice";
 
 import {
@@ -39,8 +37,6 @@ export const store = configureStore({
   // all the reducers are kept here
   reducer: {
     persistedReducer,
-    counter: counterReducer,
-    font: fontReducer,
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
