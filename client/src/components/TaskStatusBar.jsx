@@ -37,8 +37,8 @@ const TaskStatusBar = ({status, taskId, taskType}) => {
     }
 
     return (
-        <div className="flex gap-6 my-8">
-            <div className="max-w-[450px]">
+        <div className="flex md:gap-6 my-8 flex-wrap">
+            <div className="w-[450px] max-w-full">
                 <input
                     disabled={!changeAble}
                     id="status"
@@ -48,7 +48,7 @@ const TaskStatusBar = ({status, taskId, taskType}) => {
                     value={step}
                     step="1"
                     onChange={handleSliderChange}
-                    className="w-[400px] h-3 bg-gray-300 rounded-lg appearance-none cursor-pointer focus:outline-none"
+                    className="w-[400px] max-w-full h-3 bg-gray-300 rounded-lg appearance-none cursor-pointer focus:outline-none"
                 />
                 <div className="flex justify-between mt-2 text-sm">
                     <span className={` ${step === 0 ? "text-green-600 font-bold" : "text-gray-400"}`}>ToDo</span>

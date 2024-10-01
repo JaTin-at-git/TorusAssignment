@@ -8,7 +8,7 @@ const taskSchema = new mongoose.Schema({
     }, description: {
         type: String,
         minLength: [5, "Description too short!(min 5 characters)"],
-        maxLength: [200, "Description too long!(max 200 characters)"],
+        maxLength: [300, "Description too long!(max 300 characters)"],
         required: true
     }, dueDate: {
         type: Date,

@@ -20,7 +20,7 @@ function LoginPage() {
 
 
     const [formData, setFormData] = useState({
-        "email": "jigyashusaini7@gmail.com",
+        "email": "admin@gmail.com",
         "password": "password"
     });
 
@@ -34,7 +34,6 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("handeling submit")
         await loginUser(dispatch, formData);
     };
 
@@ -43,7 +42,7 @@ function LoginPage() {
             <div className="flex flex-col lg:flex-row max-w-[1400px] w-full justify-center items-center align-middle">
                 <div
                     className="w-full lg:w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <h5 className="text-xl font-medium text-gray-900 dark:text-white mb-6">Student Login</h5>
+                    <h5 className="text-xl font-medium text-gray-900 dark:text-white mb-6"> Login</h5>
                     <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleSubmit}>
 
 

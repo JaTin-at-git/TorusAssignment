@@ -70,6 +70,7 @@ const ProfilePage = () => {
 
     // Fetch tasks when any filter or task type changes
     useEffect(() => {
+        setTaskData({})
         fetchTasks(1); // Fetch tasks on filter changes and reset to the first page
     }, [taskType, status, priority]);
 
@@ -94,20 +95,20 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="relative flex justify-center items-center align-middle">
-            <div className="max-w-[1400px] w-full p-5 rounded-lg bg-gray-50 shadow-sm">
+        <div className="relative flex justify-center items-center align-middle p-2 md:p-8">
+            <div className="max-w-[1400px] w-full p-2 md:p-5 rounded-lg bg-gray-50 shadow-sm">
 
-                <div className="flex gap-4 flex-wrap my-2">
-                    <button className={`p-2 px-4 border-0 rounded-sm ${taskType === 'personal' ? 'border-b-2 border-b-black' : ''}`}
+                <div className="flex gap-1 md:gap-4 flex-wrap my-2 md:p-6">
+                    <button className={`border rounded-lg  p-2 px-4 ${taskType === 'personal' ? 'border-2 border-black' : 'border-gray-200'}`}
                             onClick={() => handleTaskTypeChange('personal')}>
                         Personal Tasks
                     </button>
-                    <button className={`p-2 px-4 border-0 rounded-sm ${taskType === 'assigned' ? 'border-b-2 border-b-black' : ''}`}
+                    <button className={`border rounded-lg  p-2 px-4 ${taskType === 'assigned' ? 'border-2 border-black' : 'border-gray-200'}`}
                             onClick={() => handleTaskTypeChange('assigned')}>
                         Assigned Tasks
                     </button>
                     {isAdmin && (
-                        <button className={`p-2 px-4 border-0 rounded-sm ${taskType === 'assignedToOthers' ? 'border-b-2 border-b-black' : ''}`}
+                        <button className={`border rounded-lg  p-2 px-4  ${taskType === 'assignedToOthers' ? 'border-2 border-black' : 'border-gray-200'}`}
                                 onClick={() => handleTaskTypeChange('assignedToOthers')}>
                             Assigned To Other
                         </button>
@@ -115,16 +116,16 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Filter Bar */}
-                <div className="flex flex-col gap-4 mb-4">
+                <div className="flex md:justify-end w-full gap-4 my-4">
                     <div className="flex gap-4">
-                        <select name="status" value={status} onChange={handleFilterChange} className="p-2 border border-gray-300 rounded">
+                        <select name="status" value={status} onChange={handleFilterChange} className="px-1 py-0 select select-sm text-sm md:p-2 md:select-md md:text-lg border border-gray-300 rounded">
                             <option value="">Select Status</option>
                             <option value="ToDo">To Do</option>
                             <option value="In Progress">In Progress</option>
                             <option value="Completed">Completed</option>
                         </select>
 
-                        <select name="priority" value={priority} onChange={handleFilterChange} className="p-2 border border-gray-300 rounded">
+                        <select name="priority" value={status} onChange={handleFilterChange} className="px-1 py-0 select select-sm text-sm md:p-2 md:select-md md:text-lg border border-gray-300 rounded">
                             <option value="">Select Priority</option>
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
@@ -135,7 +136,7 @@ const ProfilePage = () => {
 
                 <div>
                     <div className="flex flex-col w-full justify-center items-center gap-6">
-                        {taskData && taskData.map(t => <TaskTile key={t._id} taskType={taskType} task={t} />)}
+                        {taskData.length > 0 ? taskData.map(t => <TaskTile key={t._id} taskType={taskType} task={t} />): <p>--No tasks found for this search--</p>}
                     </div>
                 </div>
 

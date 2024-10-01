@@ -41,11 +41,9 @@ function SignupPage() {
     };
 
     return (
-        <div className="flex justify-center align-middle items-center ">
-            <div className="flex flex-col lg:flex-row max-w-[1400px] w-full">
-                <div className="hidden lg:flex justify-center w-1/2 p-4">
-                    <img src="https://placehold.co/600x300" alt="Signup" className="w-full my-2 object-contain"/>
-                </div>
+        <div className="flex  justify-center align-middle items-center p-6">
+
+            <div className="max-w-[1400px] flex align-middle items-center justify-center h-full w-full">
                 <div className="w-full lg:w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <h5 className="text-xl font-medium text-gray-900 dark:text-white mb-6">Signup</h5>
                     <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>

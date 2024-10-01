@@ -162,6 +162,7 @@ function CreateTaskModal({id}) {
                         <label htmlFor="personalDueDate" className="block mb-1">Due Date:</label>
                         <input
                             type="date"
+                            min={new Date().toISOString().split("T")[0]} // Set min to today's date
                             id="personalDueDate"
                             className="input input-bordered w-full mb-3"
                             value={personalTask.dueDate}
@@ -211,6 +212,7 @@ function CreateTaskModal({id}) {
                         <label htmlFor="assignedDueDate" className="block mb-1">Due Date:</label>
                         <input
                             type="date"
+                            min={new Date().toISOString().split("T")[0]} // Set min to today's date
                             id="assignedDueDate"
                             className="input input-bordered w-full mb-3"
                             value={assignedTask.dueDate}

@@ -27,7 +27,7 @@ const UserNavbar = () => {
     return (
 
 
-        <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-md">
+        <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow-md border-b">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pb-1">
                 <div className="flex flex-col rtl:space-x-reverse">
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Torus Assignment</span>
