@@ -21,12 +21,12 @@ const createSendToken = (user, status, res) => {
     const options = process.env.NODE_ENV === "development" ? {
         expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), httpOnly: true, secure: false,
     } : {
-        expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-        secure: true,
-        domain: process.env.DOMAIN,
+        domain: ".onrender.com",  // Share the cookie across subdomains
+        path: "/",                // Make cookie available on all paths
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),  // Set expiration (e.g., 1 day)
+        httpOnly: true,           // Prevent JavaScript access to the cookie (secure)
+        secure: true,             // Send only over HTTPS
         sameSite: "None",
-        path: "/"
     };
     res.cookie("jwt", token, options);
 
